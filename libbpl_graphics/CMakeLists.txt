@@ -15,13 +15,15 @@ set(PUBLIC_HEADER include/bpl/graphics/Window.h
         include/bpl/graphics/EventLoop.h
         include/bpl/graphics/Surface.h
         include/bpl/graphics/Texture.h
-        include/bpl/graphics/Font.h)
+        include/bpl/graphics/Font.h
+        include/bpl/graphics/FontCache.h)
 set(SOURCE_FILES src/Window.cpp
         src/Renderer.cpp
         src/EventLoop.cpp
         src/Surface.cpp
         src/Texture.cpp
-        src/Font.cpp)
+        src/Font.cpp
+        src/FontCache.cpp)
 
 add_library(bpl_graphics SHARED ${SOURCE_FILES} ${PUBLIC_HEADER} )
 target_link_libraries(bpl_graphics PRIVATE SDL2::SDL2 SDL2_ttf::SDL2_ttf SDL2_image::SDL2_image bpl_sys)
