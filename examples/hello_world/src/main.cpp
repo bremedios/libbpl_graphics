@@ -34,9 +34,19 @@ int main() {
         SDL_Quit();
     }
 
+    bpl::graphics::RendererPtr renderer = bpl::graphics::Renderer::CreateInstance(window);
+
+    if (!renderer->isValid()) {
+        std::cerr << "Failed to create renderer" << std::endl;
+
+        TTF_Quit();
+        SDL_Quit();
+    }
+
     bpl::graphics::EventLoopPtr loop = std::make_shared<bpl::graphics::EventLoop>();
 
     loop->setFramerate(30);
+    loop->setRenderer(renderer);
     loop->Run();
 
     TTF_Quit();

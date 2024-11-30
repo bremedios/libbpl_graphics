@@ -16,6 +16,7 @@ namespace bpl::graphics {
         Renderer();
         virtual ~Renderer();
 
+        [[nodiscard]] static std::shared_ptr<Renderer> CreateInstance(WindowPtr window);
         [[nodiscard]] bool Create(WindowPtr window);
         bool Destroy();
 
