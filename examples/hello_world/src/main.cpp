@@ -9,6 +9,7 @@
 
 #include <bpl/graphics/Window.h>
 #include <bpl/graphics/Renderer.h>
+#include <bpl/graphics/EventLoop.h>
 
 int main() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -33,9 +34,10 @@ int main() {
         SDL_Quit();
     }
 
-    window->Update();
+    bpl::graphics::EventLoopPtr loop = std::make_shared<bpl::graphics::EventLoop>();
 
-    std::this_thread::sleep_for(std::chrono::seconds(15));
+    loop->setFramerate(30);
+    loop->Run();
 
     TTF_Quit();
     SDL_Quit();
