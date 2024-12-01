@@ -18,7 +18,9 @@ set(PUBLIC_HEADER include/bpl/graphics/Window.h
         include/bpl/graphics/Font.h
         include/bpl/graphics/FontCache.h
         include/bpl/graphics/RenderObject.h
-        include/bpl/graphics/ui/Window.h)
+        include/bpl/graphics/ui/Window.h
+        include/bpl/graphics/draw/ops/Fill.h
+        include/bpl/graphics/draw/ops/JsonLoader.h)
 set(SOURCE_FILES src/Window.cpp
         src/Renderer.cpp
         src/EventLoop.cpp
@@ -26,10 +28,12 @@ set(SOURCE_FILES src/Window.cpp
         src/Texture.cpp
         src/Font.cpp
         src/FontCache.cpp
-        src/ui/Window.cpp)
+        src/ui/Window.cpp
+        src/draw/ops/Fill.cpp
+        src/draw/ops/JsonLoader.cpp)
 
 add_library(bpl_graphics SHARED ${SOURCE_FILES} ${PUBLIC_HEADER} )
-target_link_libraries(bpl_graphics PRIVATE SDL2::SDL2 SDL2_ttf::SDL2_ttf SDL2_image::SDL2_image bpl_sys)
+target_link_libraries(bpl_graphics PRIVATE SDL2::SDL2 SDL2_ttf::SDL2_ttf SDL2_image::SDL2_image bpl_sys bpl_storage)
 
 install(TARGETS bpl_graphics DESTINATION lib)
 install(FILES include/bpl/graphics/Window.h DESTINATION include/bpl/graphics)
@@ -41,3 +45,6 @@ install(FILES include/bpl/graphics/Font.h DESTINATION include/bpl/graphics)
 install(FILES include/bpl/graphics/FontCache.h DESTINATION include/bpl/graphics)
 install(FILES include/bpl/graphics/RenderObject.h DESTINATION include/bpl/graphics)
 install(FILES include/bpl/graphics/ui/Window.h DESTINATION include/bpl/graphics/ui)
+install(FILES include/bpl/graphics/draw/ops/Fill.h DESTINATION include/bpl/graphics/draw/ops)
+install(FILES include/bpl/graphics/draw/ops/Op.h DESTINATION include/bpl/graphics/draw/ops)
+install(FILES include/bpl/graphics/draw/ops/JsonLoader.h DESTINATION include/bpl/graphics/draw/ops)

@@ -11,6 +11,7 @@
 #include <rapidjson/document.h>
 
 #include <bpl/graphics/RenderObject.h>
+#include <bpl/graphics/draw/ops/JsonLoader.h>
 
 namespace bpl::graphics::ui {
 
@@ -31,7 +32,7 @@ namespace bpl::graphics::ui {
         virtual void Render(bpl::graphics::RendererPtr renderer) override;
 
 
-        //op::JsonLoader& GetJsonLoader();
+        bpl::graphics::draw::ops::JsonLoader& getJsonLoader() { return m_jsonLoader; };
 
     protected:
         Window();
@@ -45,7 +46,7 @@ namespace bpl::graphics::ui {
 
         int m_width = 0;
         int m_height = 0;*/
-        //op::JsonLoader m_jsonLoader;
+        bpl::graphics::draw::ops::JsonLoader m_jsonLoader;
 
         std::string m_layoutFile;
 

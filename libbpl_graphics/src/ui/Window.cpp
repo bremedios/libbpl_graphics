@@ -11,6 +11,8 @@
 
 #include <bpl/graphics/ui/Window.h>
 
+#include "../Debug.h"
+
 namespace bpl::graphics::ui {
     Window::Window() {
     }
@@ -24,34 +26,26 @@ namespace bpl::graphics::ui {
     }
 
     bool Window::Load(graphics::RendererPtr renderer) {
-        /*if (!m_jsonLoader.Load(m_layoutFile, m_width, m_height, renderer, framerate)) {
-            std::cerr << "Window::Load: JsonLoader::Load(...) failed" << std::endl;
+        if (!m_jsonLoader.Load(m_layoutFile, renderer->getWindow()->getWidth(), renderer->getWindow()->getHeight(), renderer)) {
+            ERROR_MSG("JsonLoader::Load(...) failed" << std::endl);
 
             return false;
         }
-*/
+
         return true;
     } // Load
 
     bool Window::Destroy() {
-        //m_jsonLoader.Destroy();
+        m_jsonLoader.Destroy();
 
         return true;
     } // Destroy
 
     void Window::Render(graphics::RendererPtr renderer) {
-/**
         for (auto op : m_jsonLoader.GetOpList()) {
             if (!op->Render(renderer)) {
-                std::cerr << "Window::Render: Failed to Render an Op" << std::endl;
+                ERROR_MSG("Failed to Render Op: " << op->getName() << " (" << op->getType() << ")");
             }
         }
-*/
     } // Render
-/*
-    op::JsonLoader& Window::GetJsonLoader() {
-        return m_jsonLoader;
-    } // GetJsonLoader*
-
- */
 } // bpl::graphics::ui

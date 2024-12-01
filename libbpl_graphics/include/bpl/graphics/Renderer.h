@@ -27,6 +27,10 @@ namespace bpl::graphics {
 
         void RenderClear();
         void RenderPresent();
+
+        bool SetDrawColor(SDL_Color color);
+        bool SetDrawColor(int red, int green, int blue, int alpha);
+
     private:
         SDL_Renderer*     m_renderer = nullptr;
         WindowPtr         m_window;
