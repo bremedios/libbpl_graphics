@@ -17,9 +17,12 @@ set(PUBLIC_HEADER include/bpl/graphics/Window.h
         include/bpl/graphics/Texture.h
         include/bpl/graphics/Font.h
         include/bpl/graphics/FontCache.h
+        include/bpl/graphics/Image.h
+        include/bpl/graphics/ImageCache.h
         include/bpl/graphics/RenderObject.h
         include/bpl/graphics/ui/Window.h
         include/bpl/graphics/draw/ops/Fill.h
+        include/bpl/graphics/draw/ops/Image.h
         include/bpl/graphics/draw/ops/JsonLoader.h)
 set(SOURCE_FILES src/Window.cpp
         src/Renderer.cpp
@@ -28,8 +31,12 @@ set(SOURCE_FILES src/Window.cpp
         src/Texture.cpp
         src/Font.cpp
         src/FontCache.cpp
+        src/Image.cpp
+        src/ImageCache.cpp
         src/ui/Window.cpp
+        src/draw/ops/Op.cpp
         src/draw/ops/Fill.cpp
+        src/draw/ops/Image.cpp
         src/draw/ops/JsonLoader.cpp)
 
 add_library(bpl_graphics SHARED ${SOURCE_FILES} ${PUBLIC_HEADER} )
@@ -47,4 +54,5 @@ install(FILES include/bpl/graphics/RenderObject.h DESTINATION include/bpl/graphi
 install(FILES include/bpl/graphics/ui/Window.h DESTINATION include/bpl/graphics/ui)
 install(FILES include/bpl/graphics/draw/ops/Fill.h DESTINATION include/bpl/graphics/draw/ops)
 install(FILES include/bpl/graphics/draw/ops/Op.h DESTINATION include/bpl/graphics/draw/ops)
+install(FILES include/bpl/graphics/draw/ops/Image.h DESTINATION include/bpl/graphics/draw/ops)
 install(FILES include/bpl/graphics/draw/ops/JsonLoader.h DESTINATION include/bpl/graphics/draw/ops)

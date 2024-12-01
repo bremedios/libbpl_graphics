@@ -14,10 +14,10 @@
 namespace bpl::graphics::draw::ops {
         class Op {
         public:
-            Op () = default;
+            Op ();
             virtual ~Op() = default;
 
-            virtual bool Load(const rapidjson::Value& value)=0;
+            virtual bool Load(bpl::graphics::RendererPtr& renderer, const rapidjson::Value& value);
             virtual bool Render(bpl::graphics::RendererPtr& renderer)=0;
 
             virtual const std::string& getType() { return m_type;}
@@ -29,7 +29,7 @@ namespace bpl::graphics::draw::ops {
             std::string m_name;
             std::string m_type;
             bool m_visible=true;
-        };
+        }; // Op
 
         typedef std::shared_ptr<Op>                 OpPtr;
         typedef std::list<OpPtr>                    OpList;

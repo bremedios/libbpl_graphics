@@ -16,7 +16,7 @@ namespace bpl::graphics::draw::ops {
         Fill();
         ~Fill() override = default;
 
-        bool Load(const rapidjson::Value& value) override;
+        bool Load(bpl::graphics::RendererPtr& renderer, const rapidjson::Value& value) override;
         bool Render(graphics::RendererPtr& renderer) override;
 
         void setColor(int red, int green, int blue);

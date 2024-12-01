@@ -1,5 +1,5 @@
 //
-// Created by bradr on 11/14/24.
+// Created by Bradley Remedios on 11/14/24.
 //
 
 
@@ -16,27 +16,23 @@ namespace bpl::graphics::draw::ops {
         m_type = "fill";
     }
 
-    bool Fill::Load(const rapidjson::Value& layout) {
+    bool Fill::Load(bpl::graphics::RendererPtr& renderer, const rapidjson::Value& layout) {
         SDL_Color   color;
         SDL_Rect    rect;
-        bool        visible = true;
 
-        if (!storage::Json::Load(layout, "name", m_name)) {
-            ERROR_MSG("Failed to load fill op name");
+        if (!bpl::graphics::draw::ops::Op::Load(renderer, layout)) {
+            ERROR_MSG("Op::Load() failed");
 
             return false;
         }
 
-        //  Optional, we don't care either way as we've defaulted the value.
-        storage::Json::Load(layout, "visible", m_visible);
-
-        if (!storage::Json::Load(layout, "color", m_bg)) {
+        if (!bpl::storage::Json::Load(layout, "color", m_bg)) {
             ERROR_MSG("Failed to get fill color");
 
             return false;
         }
 
-        if (storage::Json::Load(layout, "dest", m_destRect)) {
+        if (bpl::storage::Json::Load(layout, "dest", m_destRect)) {
             m_isFullscreen = false;
         }
         else
