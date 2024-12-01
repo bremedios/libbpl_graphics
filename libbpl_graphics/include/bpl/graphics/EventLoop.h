@@ -12,6 +12,7 @@
 
 #include <bpl/graphics/Renderer.h>
 #include <bpl/graphics/RenderObject.h>
+#include <bpl/graphics/LogicObject.h>
 
 namespace bpl::graphics {
     class EventLoop {
@@ -19,9 +20,11 @@ namespace bpl::graphics {
         EventLoop();
         virtual ~EventLoop()=default;
 
-        void addRenderObject(bpl::graphics::RenderObjectPtr renderObject);
-        void addRenderStartObject(bpl::graphics::RenderObjectPtr renderObject);
-        void addRenderEndObject(bpl::graphics::RenderObjectPtr renderObject);
+        void addLogicObject(bpl::graphics::LogicObjectPtr& logicObject);
+
+        void addRenderObject(bpl::graphics::RenderObjectPtr& renderObject);
+        void addRenderStartObject(bpl::graphics::RenderObjectPtr& renderObject);
+        void addRenderEndObject(bpl::graphics::RenderObjectPtr& renderObject);
 
         void Run();
         void Terminate() {m_terminate = true;}
@@ -39,6 +42,7 @@ namespace bpl::graphics {
         bpl::sys::Tick              m_tick;
         bool                        m_clearOnRenderStart=true;
 
+        std::list<bpl::graphics::LogicObjectPtr> m_logicObjects;
         std::list<bpl::graphics::RenderObjectPtr> m_renderObjects;
         std::list<bpl::graphics::RenderObjectPtr> m_renderStartObjects;
         std::list<bpl::graphics::RenderObjectPtr> m_renderEndObjects;

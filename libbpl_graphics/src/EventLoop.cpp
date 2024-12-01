@@ -18,17 +18,22 @@ namespace bpl::graphics {
         m_tick.setPeriod((framerate * 1000) / 60);
     } // setFramerate
 
-    void EventLoop::addRenderObject(bpl::graphics::RenderObjectPtr renderObject) {
+    void EventLoop::addLogicObject(bpl::graphics::LogicObjectPtr& logicObject) {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        m_logicObjects.emplace_back(logicObject);
+    } // addLogicObject
+
+    void EventLoop::addRenderObject(bpl::graphics::RenderObjectPtr& renderObject) {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_renderObjects.emplace_back(renderObject);
     } // addRenderObject
 
-    void EventLoop::addRenderStartObject(bpl::graphics::RenderObjectPtr renderObject) {
+    void EventLoop::addRenderStartObject(bpl::graphics::RenderObjectPtr& renderObject) {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_renderStartObjects.emplace_back(renderObject);
     } // addRenderStartObject
 
-    void EventLoop::addRenderEndObject(bpl::graphics::RenderObjectPtr renderObject) {
+    void EventLoop::addRenderEndObject(bpl::graphics::RenderObjectPtr& renderObject) {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_renderEndObjects.emplace_back(renderObject);
     } // addRenderEndObject
@@ -48,6 +53,14 @@ namespace bpl::graphics {
                 }
             }
 
+            // Perform logic operations
+            {
+                std::lock_guard<std::mutex> lock(m_mutex);
+
+                for (auto it : m_logicObjects) {
+                    it->Logic(m_renderer);
+                }
+            }
 
             if (m_clearOnRenderStart) {
                 m_renderer->RenderClear();

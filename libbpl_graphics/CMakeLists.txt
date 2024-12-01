@@ -20,6 +20,7 @@ set(PUBLIC_HEADER include/bpl/graphics/Window.h
         include/bpl/graphics/Image.h
         include/bpl/graphics/ImageCache.h
         include/bpl/graphics/RenderObject.h
+        include/bpl/graphics/LogicObject.h
         include/bpl/graphics/ui/Window.h
         include/bpl/graphics/draw/ops/Fill.h
         include/bpl/graphics/draw/ops/Image.h
@@ -51,8 +52,11 @@ install(FILES include/bpl/graphics/EventLoop.h DESTINATION include/bpl/graphics)
 install(FILES include/bpl/graphics/Surface.h DESTINATION include/bpl/graphics)
 install(FILES include/bpl/graphics/Texture.h DESTINATION include/bpl/graphics)
 install(FILES include/bpl/graphics/Font.h DESTINATION include/bpl/graphics)
+install(FILES include/bpl/graphics/Image.h DESTINATION include/bpl/graphics)
+install(FILES include/bpl/graphics/Sprite.h DESTINATION include/bpl/graphics)
 install(FILES include/bpl/graphics/FontCache.h DESTINATION include/bpl/graphics)
 install(FILES include/bpl/graphics/RenderObject.h DESTINATION include/bpl/graphics)
+install(FILES include/bpl/graphics/LogicObject.h DESTINATION include/bpl/graphics)
 install(FILES include/bpl/graphics/ui/Window.h DESTINATION include/bpl/graphics/ui)
 install(FILES include/bpl/graphics/draw/ops/Fill.h DESTINATION include/bpl/graphics/draw/ops)
 install(FILES include/bpl/graphics/draw/ops/Op.h DESTINATION include/bpl/graphics/draw/ops)

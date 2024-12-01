@@ -21,6 +21,7 @@ namespace bpl::graphics::draw::ops {
         ~Image() override = default;
 
         bool Load(bpl::graphics::RendererPtr& renderer, const rapidjson::Value& value) override;
+        bool Reload(bpl::graphics::RendererPtr& renderer);
         bool Render(bpl::graphics::RendererPtr& renderer) override;
 
         void setRenderer(bpl::graphics::RendererPtr renderer) { m_renderer = renderer; }

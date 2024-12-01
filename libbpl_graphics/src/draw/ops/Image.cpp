@@ -30,6 +30,16 @@ namespace bpl::graphics::draw::ops {
         // Optional
         storage::Json::Load(value, "dest", m_destination);
 
+        if (!Reload(renderer)) {
+            ERROR_MSG("Reload() failed");
+
+            return false;
+        }
+
+        return true;
+    } // Load
+
+    bool Image::Reload(bpl::graphics::RendererPtr& renderer) {
         m_image = graphics::ImageCache::getInstance()->getImage(renderer, m_filename);
 
         if (!m_image->isValid()) {
@@ -37,8 +47,9 @@ namespace bpl::graphics::draw::ops {
 
             return false;
         }
+
         return true;
-    } // Load
+    } // Reload
 
     bool Image::Render(graphics::RendererPtr& renderer) {
         return m_image->Draw(renderer, m_destination, m_flip);
