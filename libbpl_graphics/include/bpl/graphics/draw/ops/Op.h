@@ -9,6 +9,8 @@
 #include <map>
 #include <memory>
 
+#include <rapidjson/document.h>
+
 #include <bpl/graphics/Renderer.h>
 
 namespace bpl::graphics::draw::ops {

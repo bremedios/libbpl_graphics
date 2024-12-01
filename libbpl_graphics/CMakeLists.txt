@@ -34,12 +34,14 @@ set(SOURCE_FILES src/Window.cpp
         src/Font.cpp
         src/FontCache.cpp
         src/Image.cpp
+        src/Sprite.cpp
         src/ImageCache.cpp
         src/ui/Window.cpp
         src/draw/ops/Op.cpp
         src/draw/ops/Fill.cpp
         src/draw/ops/Image.cpp
         src/draw/ops/Text.cpp
+        src/draw/ops/Sprite.cpp
         src/draw/ops/JsonLoader.cpp)
 
 add_library(bpl_graphics SHARED ${SOURCE_FILES} ${PUBLIC_HEADER} )
@@ -62,4 +64,5 @@ install(FILES include/bpl/graphics/draw/ops/Fill.h DESTINATION include/bpl/graph
 install(FILES include/bpl/graphics/draw/ops/Op.h DESTINATION include/bpl/graphics/draw/ops)
 install(FILES include/bpl/graphics/draw/ops/Image.h DESTINATION include/bpl/graphics/draw/ops)
 install(FILES include/bpl/graphics/draw/ops/Text.h DESTINATION include/bpl/graphics/draw/ops)
+install(FILES include/bpl/graphics/draw/ops/Sprited.h DESTINATION include/bpl/graphics/draw/ops)
 install(FILES include/bpl/graphics/draw/ops/JsonLoader.h DESTINATION include/bpl/graphics/draw/ops)
