@@ -11,7 +11,7 @@ namespace bpl::graphics {
     class RenderObject {
     public:
         RenderObject()=default;
-        virtual ~RenderObject();
+        virtual ~RenderObject() =default;
 
         virtual void RenderStart(bpl::graphics::RendererPtr renderer) {};
         virtual void Render(bpl::graphics::RendererPtr renderer) {};

@@ -48,24 +48,32 @@ namespace bpl::graphics {
                 }
             }
 
+
+            if (m_clearOnRenderStart) {
+                m_renderer->RenderClear();
+            }
+
+            // Perform rendering operations
+            {
+                std::lock_guard<std::mutex> lock(m_mutex);
+
+                for (auto it : m_renderStartObjects) {
+                    it->RenderStart(m_renderer);
+                }
+
+                for (auto it : m_renderObjects) {
+                    it->Render(m_renderer);
+                }
+
+                for (auto it : m_renderEndObjects) {
+                    it->RenderEnd(m_renderer);
+                }
+            }
+
+            m_renderer->RenderPresent();
+
             m_tick.Wait();
-        }
 
-        // Perform rendering operations
-        {
-            std::lock_guard<std::mutex> lock(m_mutex);
-
-            for (auto it : m_renderStartObjects) {
-                it->RenderStart(m_renderer);
-            }
-
-            for (auto it : m_renderObjects) {
-                it->Render(m_renderer);
-            }
-
-            for (auto it : m_renderEndObjects) {
-                it->RenderEnd(m_renderer);
-            }
         }
 
         DEBUG_MSG("Ending event loop ...");

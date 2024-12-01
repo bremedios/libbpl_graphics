@@ -54,4 +54,11 @@ namespace bpl::graphics {
         return true;
     } // Destory
 
+    void Renderer::RenderClear() {
+        SDL_RenderClear(m_renderer);
+    }
+
+    void Renderer::RenderPresent() {
+        SDL_RenderPresent(m_renderer);
+    }
 } // bpl::graphics

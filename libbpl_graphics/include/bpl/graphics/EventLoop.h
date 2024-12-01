@@ -37,6 +37,7 @@ namespace bpl::graphics {
         bool                        m_terminate=false;
         int                         m_framerate=60;
         bpl::sys::Tick              m_tick;
+        bool                        m_clearOnRenderStart=true;
 
         std::list<bpl::graphics::RenderObjectPtr> m_renderObjects;
         std::list<bpl::graphics::RenderObjectPtr> m_renderStartObjects;

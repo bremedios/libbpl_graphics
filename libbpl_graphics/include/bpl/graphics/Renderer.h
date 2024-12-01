@@ -18,11 +18,15 @@ namespace bpl::graphics {
 
         [[nodiscard]] static std::shared_ptr<Renderer> CreateInstance(WindowPtr window);
         [[nodiscard]] bool Create(WindowPtr window);
+
         bool Destroy();
 
         [[nodiscard]] SDL_Renderer* getSdlRenderer() { return m_renderer; }
         [[nodiscard]] WindowPtr getWindow() { return m_window; }
         [[nodiscard]] bool isValid() { return m_renderer != nullptr; }
+
+        void RenderClear();
+        void RenderPresent();
     private:
         SDL_Renderer*     m_renderer = nullptr;
         WindowPtr         m_window;

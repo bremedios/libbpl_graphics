@@ -8,7 +8,18 @@
 #include "Debug.h"
 
 namespace bpl::graphics {
+
+    FontCachePtr FontCache::getInstance() {
+        static FontCachePtr fontCache = std::make_shared<FontCache>();
+
+        return fontCache;
+    } // getInstance
+
     FontCache::~FontCache() {
+        Clear();
+    }
+
+    void FontCache::Clear() {
         std::lock_guard<std::mutex>     lock(m_mutex);
         m_fonts.clear();
     }
@@ -18,22 +29,21 @@ namespace bpl::graphics {
 
         std::lock_guard<std::mutex>     lock(m_mutex);
 
-        FontMap::iterator it = m_fonts.find(fontKey);
+        //  return the font if we have it.
+        if (m_fonts.contains(fontKey)) {
+            return m_fonts[fontKey];
+        }
 
-        if (m_fonts.end() == it) {
-            FontPtr font = std::make_shared<Font>(name, size);
+        auto font = std::make_shared<bpl::graphics::Font>(name, size);
 
-            if (!font->isValid()) {
-                ERROR_MSG("Failed to create font: " << fontKey);
-
-                return nullptr;
-            }
-
-            m_fonts.insert(std::make_pair(fontKey, font));
+        if (!font->Load()) {
+            ERROR_MSG("Font::Load() failed for : " << name << " " << size << "pt");
 
             return font;
         }
 
-        return it->second;
+        m_fonts.emplace(fontKey, font);
+
+        return font;
     } // getFont
 } // bpl::graphics

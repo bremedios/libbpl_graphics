@@ -16,7 +16,8 @@ set(PUBLIC_HEADER include/bpl/graphics/Window.h
         include/bpl/graphics/Surface.h
         include/bpl/graphics/Texture.h
         include/bpl/graphics/Font.h
-        include/bpl/graphics/FontCache.h)
+        include/bpl/graphics/FontCache.h
+        include/bpl/graphics/RenderObject.h)
 set(SOURCE_FILES src/Window.cpp
         src/Renderer.cpp
         src/EventLoop.cpp

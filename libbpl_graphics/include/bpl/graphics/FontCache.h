@@ -14,9 +14,11 @@ namespace bpl::graphics {
 
     class FontCache {
     public:
+        static std::shared_ptr<FontCache> getInstance();
         FontCache()=default;
         virtual ~FontCache();
 
+        void Clear();
         FontPtr getFont(const std::string& name, int size);
 
     private:
