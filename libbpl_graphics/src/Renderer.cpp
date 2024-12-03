@@ -63,11 +63,11 @@ namespace bpl::graphics {
     }
 
     bool Renderer::SetDrawColor(SDL_Color color) {
-        return SetDrawColor(color.r, color.g, color.g, color.a);
+        return SetDrawColor(color.r, color.g, color.b, color.a);
     } // SetDrawColor
 
     bool Renderer::SetDrawColor(int red, int green, int blue, int alpha) {
-        if (0 > SDL_SetRenderDrawColor(m_renderer, red, blue, green, alpha)) {
+        if (0 > SDL_SetRenderDrawColor(m_renderer, red, green, blue, alpha)) {
             ERROR_MSG("SDL_SetRenderDrawColor() failed.  SDL_ERROR: " << SDL_GetError());
 
             return false;

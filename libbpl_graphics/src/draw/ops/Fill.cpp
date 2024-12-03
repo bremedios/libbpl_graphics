@@ -40,6 +40,8 @@ namespace bpl::graphics::draw::ops {
             m_isFullscreen = true;
         }
 
+        DEBUG_MSG("Loaded Background: RGBA(" << std::to_string(m_bg.r) << "," << std::to_string(m_bg.g) << "," << std::to_string(m_bg.b) << "," << std::to_string(m_bg.a) << ")");
+
         return true;
     } // Load
 
@@ -53,6 +55,8 @@ namespace bpl::graphics::draw::ops {
 
             return false;
         }
+
+        DEBUG_MSG("Set Draw Color to Background: RGBA(" << std::to_string(m_bg.r) << "," << std::to_string(m_bg.g) << "," << std::to_string(m_bg.b) << "," << std::to_string(m_bg.a) << ")");
 
         if (m_isFullscreen) {
             if (0 > SDL_RenderFillRect(renderer->getSdlRenderer(), nullptr)) {
@@ -72,10 +76,13 @@ namespace bpl::graphics::draw::ops {
     } // Render
 
     void Fill::setColor(int red, int green, int blue) {
+
         m_bg.r = red;
         m_bg.g = green;
         m_bg.b = blue;
         m_bg.a = 255;
+
+        DEBUG_MSG("Set to Background: RGBA(" << std::to_string(m_bg.r) << "," << std::to_string(m_bg.g) << "," << std::to_string(m_bg.b) << "," << std::to_string(m_bg.a) << ")");
     }
 
     void Fill::setFullscreen(bool value) {
