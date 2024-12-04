@@ -17,7 +17,8 @@ namespace bpl::graphics::draw::ops {
 
     class Image  : public bpl::graphics::draw::ops::Op{
     public:
-        Image() = default;
+        Image()=default;
+        Image(const std::string& progName);
         ~Image() override = default;
 
         bool Load(bpl::graphics::RendererPtr& renderer, const rapidjson::Value& value) override;
@@ -34,6 +35,7 @@ namespace bpl::graphics::draw::ops {
 
     private:
         std::string                   m_filename;
+        std::string                   m_progName;
         bpl::graphics::RendererPtr    m_renderer;
 
         SDL_Rect                      m_destination;

@@ -15,8 +15,9 @@
 namespace bpl::graphics::draw::ops {
       class JsonLoader {
       public:
-          JsonLoader();
-          ~JsonLoader();
+          JsonLoader()=default;
+          JsonLoader(const std::string& progName);
+          ~JsonLoader()=default;
 
           bool Load(const std::string layoutFile, int width, int height, graphics::RendererPtr renderer);
           bool Destroy();
@@ -39,6 +40,7 @@ namespace bpl::graphics::draw::ops {
 
 
           std::string                     m_layoutFile;
+          std::string                     m_progName;
 
           bpl::graphics::SpriteMap        m_sprites;
           OpList                          m_drawOps;

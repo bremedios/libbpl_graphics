@@ -7,6 +7,7 @@
 #include <bpl/graphics/Texture.h>
 #include <bpl/graphics/Font.h>
 
+#include "../../../libbpl_sys/libbpl_sys/include/bpl/sys/Path.h"
 #include "Debug.h"
 
 namespace bpl::graphics {
@@ -21,7 +22,15 @@ namespace bpl::graphics {
 
 
     bool Font::Load() {
-        m_font = TTF_OpenFont(m_fontName.c_str(), m_fontSize);
+        auto font = bpl::sys::Path::getFontFilename(m_fontName);
+
+        if (font.empty()) {
+            ERROR_MSG("No font file loaded '" << m_fontName << "'");
+
+            return false;
+        }
+
+        m_font = TTF_OpenFont(font.c_str(), m_fontSize);
 
         if (nullptr == m_font) {
             ERROR_MSG("TTF_OpenFont(" << m_fontName << ", " << m_fontSize << ") failed.  SDL_Error: "<< SDL_GetError());

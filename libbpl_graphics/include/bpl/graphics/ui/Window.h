@@ -17,7 +17,7 @@ namespace bpl::graphics::ui {
 
     class Window : public bpl::graphics::RenderObject {
     public:
-        Window(const std::string& layoutFileName);
+        Window(const std::string& layoutFileName, const std::string& progName="");
 
         virtual ~Window();
 
@@ -49,6 +49,7 @@ namespace bpl::graphics::ui {
         bpl::graphics::draw::ops::JsonLoader m_jsonLoader;
 
         std::string m_layoutFile;
+        std::string m_progName;
 
     private:
     };

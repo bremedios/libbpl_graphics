@@ -1,6 +1,8 @@
 //
 // Created by Bradley Remedios on 11/21/24.
 //
+
+#include <bpl/sys/Path.h>
 #include <bpl/storage/Json.h>
 
 #include <bpl/graphics/Image.h>
@@ -11,6 +13,10 @@
 #include "../../Debug.h"
 
 namespace bpl::graphics::draw::ops {
+    Image::Image(const std::string& progName)
+        : m_progName(progName) {
+    }
+
     bool Image::Load(bpl::graphics::RendererPtr& renderer, const rapidjson::Value& value) {
         SDL_Rect    rect;
         int         intValue;
@@ -26,6 +32,8 @@ namespace bpl::graphics::draw::ops {
 
             return false;
         }
+
+        m_filename = bpl::sys::Path::getResourceFilename(m_filename, m_progName);
 
         // Optional
         storage::Json::Load(value, "dest", m_destination);

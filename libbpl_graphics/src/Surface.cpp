@@ -6,6 +6,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 
+#include <bpl/sys/Path.h>
 #include <bpl/graphics/Surface.h>
 
 #include "Debug.h"
@@ -24,6 +25,14 @@ namespace bpl::graphics {
     } // ~Surface
 
     bool Surface::CreateFromImage(const std::string &filename) {
+        auto resourceFile = bpl::sys::Path::getResourceFilename(filename);
+
+        if (resourceFile.empty()) {
+            std::cerr << "Failed to load resource file name: " << filename << std::endl;
+
+            return false;
+        }
+
         m_surface = IMG_Load(filename.c_str());
 
         if (nullptr == m_surface) {

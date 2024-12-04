@@ -22,9 +22,9 @@
 #include "../../Debug.h"
 
 namespace bpl::graphics::draw::ops {
-    JsonLoader::JsonLoader() = default;
-
-    JsonLoader::~JsonLoader() = default;
+    JsonLoader::JsonLoader(const std::string& progName)
+        :m_progName(progName) {
+    }
 
     bool JsonLoader::Destroy() {
         m_drawOps.clear();
@@ -118,7 +118,7 @@ namespace bpl::graphics::draw::ops {
 
 
     bool JsonLoader::LoadOpImage_(graphics::RendererPtr renderer, const rapidjson::Value &layout) {
-        bpl::graphics::draw::ops::Image* op    = new bpl::graphics::draw::ops::Image();
+        bpl::graphics::draw::ops::Image* op    = new bpl::graphics::draw::ops::Image(m_progName);
         bpl::graphics::draw::ops::OpPtr opPtr = bpl::graphics::draw::ops::OpPtr(op);
 
         if (!op->Load(renderer, layout)) {
