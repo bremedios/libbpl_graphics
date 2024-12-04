@@ -13,6 +13,9 @@ namespace bpl::graphics {
       LogicObject()=default;
       virtual ~LogicObject() =default;
 
+      virtual void Destroy() {}
+      virtual void WaitForTermination() {}
+
       virtual void Logic(bpl::graphics::RendererPtr& renderer) {};
     }; // LogicObject
 
