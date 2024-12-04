@@ -9,9 +9,10 @@
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
 
+#include <bpl/sys/Path.h>
+
 #include <bpl/graphics/ui/Window.h>
 
-#include "../../../../libbpl_sys/libbpl_sys/include/bpl/sys/Path.h"
 #include "../Debug.h"
 
 namespace bpl::graphics::ui {

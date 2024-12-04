@@ -3,11 +3,12 @@
 //
 #include <iostream>
 
+#include <bpl/sys/Path.h>
+
 #include <bpl/graphics/Surface.h>
 #include <bpl/graphics/Texture.h>
 #include <bpl/graphics/Font.h>
 
-#include "../../../libbpl_sys/libbpl_sys/include/bpl/sys/Path.h"
 #include "Debug.h"
 
 namespace bpl::graphics {
