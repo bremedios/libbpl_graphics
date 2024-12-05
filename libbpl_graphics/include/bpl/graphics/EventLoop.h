@@ -20,12 +20,16 @@ namespace bpl::graphics {
         EventLoop();
         virtual ~EventLoop()=default;
 
+        void addLogicObjects(const std::list<bpl::graphics::LogicObjectPtr>& logicObjects);
         void addLogicObject(bpl::graphics::LogicObjectPtr& logicObject);
+
+        void addRenderObjects(const std::list<bpl::graphics::RenderObjectPtr>& renderObjects);
 
         void addRenderObject(bpl::graphics::RenderObjectPtr& renderObject);
         void addRenderStartObject(bpl::graphics::RenderObjectPtr& renderObject);
         void addRenderEndObject(bpl::graphics::RenderObjectPtr& renderObject);
 
+        void Clear();
         void Run();
         void Terminate() {m_terminate = true;}
 

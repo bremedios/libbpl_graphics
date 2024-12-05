@@ -48,7 +48,8 @@ set(SOURCE_FILES src/Window.cpp
         src/draw/ops/JsonLoader.cpp
         src/collider/Floor.cpp
         src/collider/Ladder.cpp
-        src/collider/Collider.cpp)
+        src/collider/Collider.cpp
+        src/screens/ScreenStateStack.cpp)
 
 add_library(bpl_graphics SHARED ${SOURCE_FILES} ${PUBLIC_HEADER} )
 target_link_libraries(bpl_graphics PRIVATE SDL2::SDL2 SDL2_ttf::SDL2_ttf SDL2_image::SDL2_image bpl_sys bpl_storage)

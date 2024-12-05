@@ -18,10 +18,32 @@ namespace bpl::graphics {
         m_tick.setPeriod((framerate * 1000) / 60);
     } // setFramerate
 
+    void EventLoop::Clear() {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        m_logicObjects.clear();
+        m_renderObjects.clear();
+    } // Clear
+
+    void EventLoop::addLogicObjects(const std::list<bpl::graphics::LogicObjectPtr>& logicObjects) {
+        std::lock_guard<std::mutex> lock(m_mutex);
+
+        for (auto & it : logicObjects) {
+            m_logicObjects.emplace_back(it);
+        }
+    } // addLogicObjects
+
     void EventLoop::addLogicObject(bpl::graphics::LogicObjectPtr& logicObject) {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_logicObjects.emplace_back(logicObject);
     } // addLogicObject
+
+    void EventLoop::addRenderObjects(const std::list<bpl::graphics::RenderObjectPtr>& renderObjects) {
+        std::lock_guard<std::mutex> lock(m_mutex);
+
+        for (auto & it : renderObjects) {
+            m_renderObjects.emplace_back(it);
+        }
+    } // addRenderObjects
 
     void EventLoop::addRenderObject(bpl::graphics::RenderObjectPtr& renderObject) {
         std::lock_guard<std::mutex> lock(m_mutex);
