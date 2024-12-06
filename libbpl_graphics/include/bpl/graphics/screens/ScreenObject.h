@@ -16,8 +16,11 @@ namespace bpl::graphics::screens {
         ScreenObject() = default;
         virtual ~ScreenObject() = default;
 
-        virtual std::list<bpl::graphics::RenderObjectPtr> getRenderObjects() = 0;
-        virtual std::list<bpl::graphics::LogicObjectPtr> getLogicObjects() = 0;
+        virtual const std::list<bpl::graphics::RenderObjectPtr>& getRenderObjects() { return m_renderObjects; }
+        virtual const std::list<bpl::graphics::LogicObjectPtr>& getLogicObjects() { return m_logicObjects; }
+    protected:
+        std::list<bpl::graphics::RenderObjectPtr> m_renderObjects;
+        std::list<bpl::graphics::LogicObjectPtr> m_logicObjects;
     }; // ScreenObject
 
     typedef std::shared_ptr<ScreenObject> ScreenObjectPtr;
