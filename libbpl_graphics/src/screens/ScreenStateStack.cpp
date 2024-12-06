@@ -14,27 +14,53 @@ namespace bpl::graphics::screens {
         return ptr;
     } // getInstance
 
-    void ScreenStateStack::Push(bpl::graphics::screens::ScreenObjectPtr& screenObject) {
-        m_screenStack.emplace(screenObject);
+    void ScreenStateStack::AddScreen(bpl::graphics::screens::ScreenObjectPtr& screenObject) {
+        m_screenObjects.emplace(screenObject->getName(), screenObject);
+    } // AddScreen
 
-        m_eventLoop->Clear();
-        m_eventLoop->addRenderObjects(screenObject->getRenderObjects());
-        m_eventLoop->addLogicObjects(screenObject->getLogicObjects());
+    void ScreenStateStack::Push(const std::string& name) {
+        // This is a reserved value to cause us to quit.
+        if (name == "QUIT PROGRAM") {
+            DEBUG_MSG("QUIT PROGRAM Received, terminating...");
+            m_eventLoop->Terminate();
+            return;
+        }
+
+        DEBUG_MSG("Screen '" << name << "' Pushed to stack");
+
+        if (!m_screenObjects.contains(name)) {
+            ERROR_MSG("Request to push screen that doesn't exist, ignoring");
+
+            return;
+        }
+
+        auto screenObject = m_screenObjects[name];
+
+        m_eventLoop->Next(
+            screenObject->getLogicObjects(),
+            screenObject->getRenderObjects(),
+            screenObject->getRenderStartObjects(),
+            screenObject->getRenderEndObjects());
+
+        m_screenStack.push(name);
+        DEBUG_MSG("Push Completed");
     } // Push
 
-    bpl::graphics::screens::ScreenObjectPtr ScreenStateStack::Pop() {
-        ScreenObjectPtr screenObject = m_screenStack.top();
+    void ScreenStateStack::Pop() {
         m_screenStack.pop();
-
-        m_eventLoop->Clear();
 
         if (m_screenStack.size() == 0) {
             DEBUG_MSG("Popped last object");
 
-            return screenObject;
+            return;
         }
 
-        m_eventLoop->addRenderObjects(screenObject->getRenderObjects());
-        return screenObject;
+        auto screenObject = m_screenObjects[m_screenStack.top()];
+
+        m_eventLoop->Next(
+            screenObject->getLogicObjects(),
+            screenObject->getRenderObjects(),
+            screenObject->getRenderStartObjects(),
+            screenObject->getRenderEndObjects());
     } // Pop
 }; // ScreenStateStack

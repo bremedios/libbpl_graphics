@@ -9,13 +9,21 @@
 namespace bpl::graphics {
 
     EventLoop::EventLoop()
-    : m_tick(std::chrono::milliseconds(20)) {
+    : m_tick(std::chrono::milliseconds(20))
+    , m_joystickScanTimer(std::chrono::milliseconds(1000)){
+        m_input = std::make_shared<bpl::controls::Input>();
+
+        if (!m_input->Create()) {
+            ERROR_MSG("Failed to create input");
+        }
+
+        m_input->ScanJoysticks();
     }
 
     void EventLoop::setFramerate(int framerate) {
         m_framerate = framerate;
 
-        m_tick.setPeriod((framerate * 1000) / 60);
+        m_tick.setPeriod(1000 / framerate);
     } // setFramerate
 
     void EventLoop::Clear() {
@@ -60,6 +68,17 @@ namespace bpl::graphics {
         m_renderEndObjects.emplace_back(renderObject);
     } // addRenderEndObject
 
+    void EventLoop::Next(std::list<bpl::graphics::LogicObjectPtr>  logicObjects,
+        std::list<bpl::graphics::RenderObjectPtr> renderObjects,
+        std::list<bpl::graphics::RenderObjectPtr> renderStartObjects,
+        std::list<bpl::graphics::RenderObjectPtr> renderEndObjects) {
+        m_nextLogicObjects = logicObjects;;
+        m_nextRenderObjects = renderObjects;
+        m_nextRenderStartObjects = renderStartObjects;
+        m_nextRenderEndObjects = renderEndObjects;
+        m_nextObjReady = true;
+    } // Next
+
     void EventLoop::Run() {
         DEBUG_MSG("Starting event loop ...");
         SDL_Event event;
@@ -75,12 +94,27 @@ namespace bpl::graphics {
                 }
             }
 
+            //  We rescan our joysticks if our timer has expired.  This will
+            //  allow us to pull in a joystick that is detected after the input
+            //  is scanned
+            if (m_joystickScanTimer.isExpired()) {
+                m_input->ScanJoysticks();
+                m_joystickScanTimer.Reset();
+            }
+
+            //  Run the input handler to pull any joysticks events that have
+            //  occurred since last ran.
+            m_input->Update();
+
             // Perform logic operations
             {
                 std::lock_guard<std::mutex> lock(m_mutex);
 
+                // WARN: We may want to do this differently.  If there are in
+                // fact multiple objects this could be problematic if they are
+                // accessing the Pressed routines as they clear on read.
                 for (auto it : m_logicObjects) {
-                    it->Logic(m_renderer);
+                    it->Logic(m_renderer, m_input);
                 }
             }
 
@@ -109,6 +143,20 @@ namespace bpl::graphics {
 
             m_tick.Wait();
 
+            if (m_nextObjReady) {
+                m_logicObjects = m_nextLogicObjects;
+                m_renderObjects = m_nextRenderObjects;
+                m_renderStartObjects = m_nextRenderStartObjects;
+                m_renderEndObjects = m_nextRenderEndObjects;
+
+                m_nextLogicObjects.clear();
+                m_nextRenderObjects.clear();
+                m_nextRenderStartObjects.clear();
+                m_nextRenderEndObjects.clear();
+                m_nextObjReady = false;
+
+                m_input->ClearPressedKeys();
+            }
         }
 
         DEBUG_MSG("Ending event loop ...");

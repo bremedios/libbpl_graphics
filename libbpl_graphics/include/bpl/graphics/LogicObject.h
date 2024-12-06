@@ -6,6 +6,8 @@
 #define BPL_GRAPHICS_LOGICOBJECT_H
 
 #include <memory>
+#include <bpl/graphics/Renderer.h>
+#include <bpl/controls/Input.h>
 
 namespace bpl::graphics {
     class LogicObject {
@@ -16,7 +18,7 @@ namespace bpl::graphics {
       virtual void Destroy() {}
       virtual void WaitForTermination() {}
 
-      virtual void Logic(bpl::graphics::RendererPtr& renderer) {};
+      virtual void Logic(bpl::graphics::RendererPtr& renderer, bpl::controls::InputPtr& input) {};
     }; // LogicObject
 
     typedef std::shared_ptr<LogicObject> LogicObjectPtr;
