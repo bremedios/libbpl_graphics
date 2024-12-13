@@ -5,8 +5,6 @@
 #ifndef BPL_GRAPHICS_EVENTLOOP_H
 #define BPL_GRAPHICS_EVENTLOOP_H
 
-#include "../../../../../libbpl_controls/libbpl_controls/include/bpl/controls/Input.h"
-
 #include <chrono>
 #include <list>
 
