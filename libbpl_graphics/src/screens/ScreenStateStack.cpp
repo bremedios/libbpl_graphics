@@ -6,6 +6,7 @@
 #include <bpl/graphics/screens/ScreenStateStack.h>
 
 #include "../Debug.h"
+#include "bpl/sys/Stopwatch.h"
 
 namespace bpl::graphics::screens {
     std::shared_ptr<ScreenStateStack> ScreenStateStack::getInstance() {
@@ -17,6 +18,21 @@ namespace bpl::graphics::screens {
     void ScreenStateStack::AddScreen(bpl::graphics::screens::ScreenObjectPtr& screenObject) {
         m_screenObjects.emplace(screenObject->getName(), screenObject);
     } // AddScreen
+
+    void ScreenStateStack::Clear() {
+        while (!m_screenStack.empty()) {
+            auto screenObject = m_screenObjects[m_screenStack.top()];
+
+            m_screenStack.pop();
+
+            if (nullptr != screenObject.get()) {
+                screenObject->Destroy();
+                screenObject.reset();
+            }
+        }
+
+        m_screenObjects.clear();
+    } // Clear
 
     void ScreenStateStack::Push(const std::string& name) {
         // This is a reserved value to cause us to quit.

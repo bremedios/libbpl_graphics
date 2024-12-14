@@ -16,6 +16,8 @@ namespace bpl::graphics::screens {
         ScreenObject() = default;
         virtual ~ScreenObject() = default;
 
+        virtual void Destroy();
+
         const std::string& getName() const {return m_name;}
 
         virtual const std::list<bpl::graphics::RenderObjectPtr>& getRenderObjects() { return m_renderObjects; }

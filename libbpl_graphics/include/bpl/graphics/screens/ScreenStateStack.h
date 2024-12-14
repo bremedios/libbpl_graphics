@@ -21,6 +21,7 @@ namespace bpl::graphics::screens {
         ~ScreenStateStack() override = default;
 
         void AddScreen(bpl::graphics::screens::ScreenObjectPtr& screenObject);
+        void Clear();
 
         //
         //  These will allow us to push and pop screens into the screen.  This allows
